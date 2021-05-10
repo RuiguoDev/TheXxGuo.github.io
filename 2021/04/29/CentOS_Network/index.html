@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"clockworkmonkeystudio.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参数注：这些参数值不区分大小写，不区分单引号和双引号，甚至可以不用引号。  TYPE：配置文件接口类型。在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;目录有多种网络配置文件，有 Ethernet 、IPsec 等类型，网络接口类型为 Ethernet。 DEVICE：网络接口名称 BOOTPROTO：系统启动地址协议 none：不使用启动地址协议 bootp：BOOTP协议 dh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS Network">
+<meta property="og:url" content="htts://clockworkmonkeystudio.com/2021/04/29/CentOS_Network/index.html">
+<meta property="og:site_name" content="Clockowrk Monkey Studio">
+<meta property="og:description" content="参数注：这些参数值不区分大小写，不区分单引号和双引号，甚至可以不用引号。  TYPE：配置文件接口类型。在&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;目录有多种网络配置文件，有 Ethernet 、IPsec 等类型，网络接口类型为 Ethernet。 DEVICE：网络接口名称 BOOTPROTO：系统启动地址协议 none：不使用启动地址协议 bootp：BOOTP协议 dh">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-04-29T00:58:00.000Z">
+<meta property="article:modified_time" content="2021-04-29T02:44:37.000Z">
+<meta property="article:author" content="GG">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="htts://clockworkmonkeystudio.com/2021/04/29/CentOS_Network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>CentOS Network | Clockowrk Monkey Studio</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f947e1e5f300fb2387e98ab354406f3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Clockowrk Monkey Studio</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Clockwork Monkey</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ClockworkMonkey" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="htts://clockworkmonkeystudio.com/2021/04/29/CentOS_Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="GG">
+      <meta itemprop="description" content="Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Clockowrk Monkey Studio">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS Network
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-29 08:58:00 / Modified: 10:44:37" itemprop="dateCreated datePublished" datetime="2021-04-29T08:58:00+08:00">2021-04-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/CentOS/" itemprop="url" rel="index"><span itemprop="name">CentOS</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/CentOS/Network/" itemprop="url" rel="index"><span itemprop="name">Network</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>注：这些参数值不区分大小写，不区分单引号和双引号，甚至可以不用引号。</p>
+<ul>
+<li>TYPE：配置文件接口类型。在/etc/sysconfig/network-scripts/目录有多种网络配置文件，有 Ethernet 、IPsec 等类型，网络接口类型为 Ethernet。</li>
+<li>DEVICE：网络接口名称</li>
+<li>BOOTPROTO：系统启动地址协议<ul>
+<li>none：不使用启动地址协议</li>
+<li>bootp：BOOTP协议</li>
+<li>dhcp：DHCP动态地址协议</li>
+<li>static：静态地址协议</li>
+</ul>
+</li>
+<li>ONBOOT：系统启动时是否激活<ul>
+<li>yes：系统启动时激活该网络接口</li>
+<li>no：系统启动时不激活该网络接口</li>
+</ul>
+</li>
+<li>IPADDR：IP地址</li>
+<li>NETMASK：子网掩码</li>
+<li>GATEWAY：网关地址</li>
+<li>BROADCAST：广播地址</li>
+<li>HWADDR/MACADDR：MAC地址。只需设置其中一个，同时设置时不能相互冲突。</li>
+<li>PEERDNS：是否指定DNS。如果使用DHCP协议，默认为yes。<ul>
+<li>yes：如果DNS设置，修改/etc/resolv.conf中的DNS</li>
+<li>no：不修改/etc/resolv.conf中的DNS</li>
+</ul>
+</li>
+<li>DNS{1, 2}：DNS地址。当PEERDNS为yes时会被写入/etc/resolv.conf中。</li>
+<li>NM_CONTROLLED：是否由Network Manager控制该网络接口。修改保存后立即生效，无需重启。被其坑过几次，建议一般设为no。<ul>
+<li>yes：由Network Manager控制</li>
+<li>no：不由Network Manager控制</li>
+</ul>
+</li>
+<li>USERCTL：用户权限控制<ul>
+<li>yes：非root用户允许控制该网络接口</li>
+<li>no：非root用户不允许控制该网络接口</li>
+</ul>
+</li>
+<li>IPV6INIT：是否执行IPv6<ul>
+<li>yes：支持IPv6</li>
+<li>no：不支持IPv6</li>
+</ul>
+</li>
+<li>IPV6ADDR：IPv6地址/前缀长度</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:50:56:3d:bc:2d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.0.130/24 brd 192.168.0.255 scope global noprefixroute ens33</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::250:56ff:fe3d:bc2d/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:50:56:3f:8b:8f brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.66.130/24 brd 192.168.10.255 scope global noprefixroute ens37</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::250:56ff:fe3f:8b8f/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">4: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:77:ee:04 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">5: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:77:ee:04 brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure>
+
+<p>两块网卡，都使用静态 IP。</p>
+<ul>
+<li>ens33：内网（DEFROUTE=no）</li>
+<li>ens37：外网（DEFROUTE=yes，DNS1=192.168.66.2）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /etc/sysconfig/network-scripts/</span><br><span class="line">[root@localhost network-scripts]# ll</span><br><span class="line">total 256</span><br><span class="line">-rw-r--r--. 1 root root   392 Apr 29 01:05 ifcfg-ens33</span><br><span class="line">-rw-r--r--. 1 root root   413 Apr 29 01:08 ifcfg-ens37</span><br><span class="line">-rw-r--r--. 1 root root   254 May 22  2020 ifcfg-lo</span><br><span class="line">lrwxrwxrwx. 1 root root    24 Apr 28 23:54 ifdown -&gt; ../../../usr/sbin/ifdown</span><br><span class="line">-rwxr-xr-x. 1 root root   654 May 22  2020 ifdown-bnep</span><br><span class="line">-rwxr-xr-x. 1 root root  6532 May 22  2020 ifdown-eth</span><br><span class="line">-rwxr-xr-x. 1 root root  6190 Oct 14  2020 ifdown-ib</span><br><span class="line">-rwxr-xr-x. 1 root root   781 May 22  2020 ifdown-ippp</span><br><span class="line">-rwxr-xr-x. 1 root root  4540 May 22  2020 ifdown-ipv6</span><br><span class="line">lrwxrwxrwx. 1 root root    11 Apr 28 23:54 ifdown-isdn -&gt; ifdown-ippp</span><br><span class="line">-rwxr-xr-x. 1 root root  2130 May 22  2020 ifdown-post</span><br><span class="line">-rwxr-xr-x. 1 root root  1068 May 22  2020 ifdown-ppp</span><br><span class="line">-rwxr-xr-x. 1 root root   870 May 22  2020 ifdown-routes</span><br><span class="line">-rwxr-xr-x. 1 root root  1456 May 22  2020 ifdown-sit</span><br><span class="line">-rwxr-xr-x. 1 root root  1621 Dec  9  2018 ifdown-Team</span><br><span class="line">-rwxr-xr-x. 1 root root  1556 Dec  9  2018 ifdown-TeamPort</span><br><span class="line">-rwxr-xr-x. 1 root root  1462 May 22  2020 ifdown-tunnel</span><br><span class="line">lrwxrwxrwx. 1 root root    22 Apr 28 23:54 ifup -&gt; ../../../usr/sbin/ifup</span><br><span class="line">-rwxr-xr-x. 1 root root 12415 May 22  2020 ifup-aliases</span><br><span class="line">-rwxr-xr-x. 1 root root   910 May 22  2020 ifup-bnep</span><br><span class="line">-rwxr-xr-x. 1 root root 13758 May 22  2020 ifup-eth</span><br><span class="line">-rwxr-xr-x. 1 root root 10357 Oct 14  2020 ifup-ib</span><br><span class="line">-rwxr-xr-x. 1 root root 12075 May 22  2020 ifup-ippp</span><br><span class="line">-rwxr-xr-x. 1 root root 11893 May 22  2020 ifup-ipv6</span><br><span class="line">lrwxrwxrwx. 1 root root     9 Apr 28 23:54 ifup-isdn -&gt; ifup-ippp</span><br><span class="line">-rwxr-xr-x. 1 root root   650 May 22  2020 ifup-plip</span><br><span class="line">-rwxr-xr-x. 1 root root  1064 May 22  2020 ifup-plusb</span><br><span class="line">-rwxr-xr-x. 1 root root  4997 May 22  2020 ifup-post</span><br><span class="line">-rwxr-xr-x. 1 root root  4154 May 22  2020 ifup-ppp</span><br><span class="line">-rwxr-xr-x. 1 root root  2001 May 22  2020 ifup-routes</span><br><span class="line">-rwxr-xr-x. 1 root root  3303 May 22  2020 ifup-sit</span><br><span class="line">-rwxr-xr-x. 1 root root  1755 Dec  9  2018 ifup-Team</span><br><span class="line">-rwxr-xr-x. 1 root root  1876 Dec  9  2018 ifup-TeamPort</span><br><span class="line">-rwxr-xr-x. 1 root root  2780 May 22  2020 ifup-tunnel</span><br><span class="line">-rwxr-xr-x. 1 root root  1836 May 22  2020 ifup-wireless</span><br><span class="line">-rwxr-xr-x. 1 root root  5419 May 22  2020 init.ipv6-global</span><br><span class="line">-rw-r--r--. 1 root root 20678 May 22  2020 network-functions</span><br><span class="line">-rw-r--r--. 1 root root 30988 May 22  2020 network-functions-ipv6</span><br></pre></td></tr></table></figure>
+
+<h2 id="ifcfg-ens33"><a href="#ifcfg-ens33" class="headerlink" title="ifcfg-ens33"></a>ifcfg-ens33</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">HWADDR=00:50:56:3D:BC:2D</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPADDR=192.168.0.130</span><br><span class="line">PREFIX=24</span><br><span class="line">GATEWAY=192.168.0.1</span><br><span class="line">DEFROUTE=no</span><br><span class="line">PEERDNS=no</span><br><span class="line">PEERROUTES=no</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=no</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=a6580d4c-11b0-310b-946b-31ef503f326e</span><br><span class="line">ONBOOT=yes</span><br><span class="line">AUTOCONNECT_PRIORITY=-999</span><br></pre></td></tr></table></figure>
+
+<h2 id="ifcfg-ens37"><a href="#ifcfg-ens37" class="headerlink" title="ifcfg-ens37"></a>ifcfg-ens37</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">HWADDR=00:50:56:3F:8B:8F</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=no</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens37</span><br><span class="line">UUID=45bffbcf-e3ce-3bcf-9a30-73f3ceec61e7</span><br><span class="line">ONBOOT=yes</span><br><span class="line">AUTOCONNECT_PRIORITY=-999</span><br><span class="line">IPADDR=192.168.66.130</span><br><span class="line">PREFIX=24</span><br><span class="line">GATEWAY=192.168.66.2</span><br><span class="line">PEERDNS=no</span><br><span class="line">PEERROUTES=no</span><br><span class="line">DNS1=192.168.66.2</span><br></pre></td></tr></table></figure>
+
+<h1 id="重启网络设置"><a href="#重启网络设置" class="headerlink" title="重启网络设置"></a>重启网络设置</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# service network restart</span><br><span class="line">Restarting network (via systemctl):                        [  OK  ]</span><br></pre></td></tr></table></figure>
+
+<h1 id="查看-ip-和-route"><a href="#查看-ip-和-route" class="headerlink" title="查看 ip 和 route"></a>查看 ip 和 route</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:50:56:3d:bc:2d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.0.130/24 brd 192.168.0.255 scope global noprefixroute ens33</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::250:56ff:fe3d:bc2d/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:50:56:3f:8b:8f brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.66.130/24 brd 192.168.66.255 scope global noprefixroute ens37</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::250:56ff:fe3f:8b8f/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">4: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:77:ee:04 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">5: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000</span><br><span class="line">    link/ether 52:54:00:77:ee:04 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">[root@localhost network-scripts]# ip route</span><br><span class="line">default via 192.168.66.2 dev ens37 proto static metric 101 </span><br><span class="line">192.168.0.0/24 dev ens33 proto kernel scope link src 192.168.0.130 metric 100 </span><br><span class="line">192.168.66.0/24 dev ens37 proto kernel scope link src 192.168.66.130 metric 101 </span><br><span class="line">192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1 </span><br></pre></td></tr></table></figure>
+
+<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# export https_proxy=http://192.168.0.88:7890 http_proxy=http://192.168.0.88:7890 all_proxy=socks5://192.168.0.88:7891</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/28/CentOS_MySQL/" rel="prev" title="CentOS MySQL">
+      <i class="fa fa-chevron-left"></i> CentOS MySQL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/29/CentOS_Date/" rel="next" title="CentOS Date">
+      CentOS Date <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ifcfg-ens33"><span class="nav-number">2.1.</span> <span class="nav-text">ifcfg-ens33</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifcfg-ens37"><span class="nav-number">2.2.</span> <span class="nav-text">ifcfg-ens37</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">重启网络设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-ip-%E5%92%8C-route"><span class="nav-number">4.</span> <span class="nav-text">查看 ip 和 route</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">代理</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GG"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">GG</p>
+  <div class="site-description" itemprop="description">Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ClockworkMonkey" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ClockworkMonkey" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:clockworkmonkey.dev@outlook.com" title="E-Mail → mailto:clockworkmonkey.dev@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://clockworkmonkeystudio.com/" title="https:&#x2F;&#x2F;clockworkmonkeystudio.com">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GG</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
